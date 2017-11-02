@@ -1,0 +1,68 @@
+    <html ng-app="fetch">
+    <head>
+    <title>Rotmg Account Lookup</title>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.24/angular.min.js"></script>
+    </head>
+
+    <body>
+    <br>
+    <div class="ui two column centered grid">
+  <div class="column">
+        <h2 class="ui center aligned icon header">
+          <i class="circular spy icon"></i>
+          Account Lookup
+        </h2>
+        <div ng-controller="deathCtrl">
+                    <div class="ui icon input">
+              <i class="inverted circular search link icon"></i>
+          <input type="text" ng-model="searchFilter" class="form-control">
+          </div>
+          <br />
+          <br />
+            <div style="height:300px;overflow-y: scroll;">
+            <table class="ui celled table">
+                <thead>
+                    <tr>
+                        <th>Fame</th>
+                        <th>Gold</th>
+                        <th>Rank</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="accounts in death | orderBy:accounts.fame">
+                        <td>{{accounts.fame}}</td>
+                        <td>{{accounts.gold}}</td>
+                        <td>{{accounts.rank}}</td>
+                        <td>{{accounts.name}}</td>
+
+
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+          </div>
+         </div>
+        </div>
+              </body>
+
+    <script>
+        var fetch = angular.module('fetch', []);
+
+        
+        fetch.controller('deathCtrl', ['$scope', '$http', function ($scope, $http) {
+            $http.get("death.php")
+                .success(function(data){
+                    $scope.death = data;
+                })
+                .error(function() {
+                    $scope.death = "error in fetching data";
+                });
+        }]);
+
+
+    </script>
+
+    </html>
